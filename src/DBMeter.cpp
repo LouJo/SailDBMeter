@@ -2,6 +2,7 @@
 #include <QtConcurrent>
 #include <QCoreApplication>
 #include <stdint.h>
+#include <pulse/simple.h>
 
 #include "DBMeter.hpp"
 
@@ -9,12 +10,20 @@ using namespace std;
 
 DBMeter::DBMeter()
 {
+	pa_simple *s;
+
 	format.setSampleRate(16000);
 	format.setChannelCount(1);
 	format.setSampleSize(16);
 	format.setCodec("audio/pcm");
 	format.setByteOrder(QAudioFormat::LittleEndian);
 	format.setSampleType(QAudioFormat::SignedInt);
+
+	cerr << "devices list:" << endl;
+	for (auto &dev : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
+		cerr << dev.deviceName().toStdString() << endl;
+	}
+	cerr << endl;
 
 	QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
 
@@ -29,7 +38,7 @@ DBMeter::DBMeter()
 		<< endl;
 
 	device = NULL;
-	input = new QAudioInput(format, this);
+	input = new QAudioInput(info, format, this);
 }
 
 DBMeter::~DBMeter()
