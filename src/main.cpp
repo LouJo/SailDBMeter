@@ -1,7 +1,10 @@
+#include <QCoreApplication>
 #include "DBMeter.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
+	QCoreApplication app(argc, argv);
 	DBMeter meter;
-	return 0;
+	meter.Start();
+	return app.exec();
 }

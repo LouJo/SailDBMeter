@@ -1,4 +1,4 @@
-QT += qml quick gui multimedia
+QT += qml quick gui multimedia concurrent
 TARGET = DBMeter
 
 CONFIG += c++11
