@@ -12,15 +12,16 @@ class DBMeter : public QObject {
 	QAudioEncoderSettings settings;
 	QAudioProbe *probe;
 
-	double level;
+	double level, energy;
 	bool running;
-	int computeMs, computeFrame;
+	int computeMs, computeFrame, frameComputed;
 
 	static const int rate = 16000;
 	static const int defaultComputeMs = 500;
 
 	private slots:
 	void AudioCb(const QAudioBuffer &buffer);
+	inline void ComputeFrame(int16_t v);
 
 	public:
 	DBMeter();

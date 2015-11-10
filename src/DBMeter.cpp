@@ -38,6 +38,8 @@ DBMeter::~DBMeter()
 void DBMeter::Start()
 {
 	running = true;
+	frameComputed = 0;
+	energy = 0;
 	recorder->record();
 	runningChanged();
 }
@@ -49,18 +51,27 @@ void DBMeter::Stop()
 	runningChanged();
 }
 
+void DBMeter::ComputeFrame(int16_t v)
+{
+	int32_t d = v * v;
+	double r = d / INT32_MAX;
+	energy += r;
+
+	if (frameComputed++ == computeFrame) {
+		level = 20 * log(sqrt(energy / INT32_MAX / frameComputed));
+		cerr << level << endl;
+		energy = 0;
+		frameComputed = 0;
+		levelChanged();
+	}
+}
+
 void DBMeter::AudioCb(const QAudioBuffer &buffer)
 {
 	const int16_t *ptr = buffer.constData<int16_t>();
-	uint16_t maxVal = 0, val;
 	int nbFrame = buffer.sampleCount();
 
-	while (nbFrame--) {
-		val = abs(*ptr++);
-		if (val > maxVal) maxVal = val;
-	}
-	cerr << " maxVal " << maxVal << endl;
-	levelChanged();
+	while (nbFrame--) ComputeFrame(*ptr++);
 }
 
 double DBMeter::GetLevel()
