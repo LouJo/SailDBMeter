@@ -5,6 +5,9 @@ CONFIG += c++11
 
 DEFINES += TARGET=\""$(TARGET")\"
 
+RESOURCES += \
+	qml/qml.qrc
+
 SOURCES += \
 	src/DBMeter.cpp \
 	src/main.cpp

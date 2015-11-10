@@ -5,9 +5,12 @@ CONFIG += c++11 sailfishapp sailfishapp_i18n
 
 DEFINES += TARGET=\""$(TARGET")\"
 
+RESOURCES += \
+	qml/sailfish.qrc
+
 SOURCES += \
 	src/DBMeter.cpp \
-	src/main.cpp
+	src/sailfish.cpp
 
 HEADERS += \
 	src/DBMeter.hpp

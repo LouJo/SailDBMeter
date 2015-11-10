@@ -59,7 +59,7 @@ void DBMeter::ComputeFrame(int16_t v)
 
 	if (frameComputed++ == computeFrame) {
 		level = 20 * log(gain * sqrt(energy / INT32_MAX / frameComputed));
-		cerr << level << endl;
+		//cerr << level << endl;
 		energy = 0;
 		frameComputed = 0;
 		levelChanged();

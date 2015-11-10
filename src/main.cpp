@@ -1,12 +1,15 @@
-#include <QCoreApplication>
+#include <QGuiApplication>
+#include <QQuickView>
 #include <QtQml>
 #include "DBMeter.hpp"
 
 int main(int argc, char* argv[])
 {
-	QCoreApplication app(argc, argv);
-	//qmlRegisterType<DBMeter>("io.audio.input.dbmeter", 1, 0, "DBMeter");
-	DBMeter meter;
-	meter.Start();
+	qmlRegisterType<DBMeter>("LJDBMeter", 1, 0, "DBMeter");
+
+	QGuiApplication app(argc, argv);
+	QQuickView view;
+	view.setSource(QUrl("qrc:///qml/Main.qml"));
+	view.show();
 	return app.exec();
 }
