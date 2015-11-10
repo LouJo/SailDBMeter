@@ -1,19 +1,18 @@
-#include <QIODevice>
-#include <QAudioInput>
+#include <QAudioRecorder>
+#include <QAudioProbe>
 
 class DBMeter : public QObject {
 	Q_OBJECT
 	private:
-	QIODevice *device;
-	QAudioInput *input;
-	QAudioFormat format;
-	QAudioDeviceInfo info;
+	QAudioRecorder *recorder;
+	QAudioEncoderSettings settings;
+	QAudioProbe *probe;
 
 	static const int bufferSize = 10 << 10; // 10ko;
 	char buffer[bufferSize];
 
 	private slots:
-	void AudioCb();
+	void AudioCb(const QAudioBuffer &buffer);
 
 	public:
 	DBMeter();

@@ -10,62 +10,44 @@ using namespace std;
 
 DBMeter::DBMeter()
 {
-	pa_simple *s;
+	settings.setCodec("audio/PCM");
+	settings.setChannelCount(1);
+	settings.setSampleRate(16000);
 
-	format.setSampleRate(16000);
-	format.setChannelCount(1);
-	format.setSampleSize(16);
-	format.setCodec("audio/pcm");
-	format.setByteOrder(QAudioFormat::LittleEndian);
-	format.setSampleType(QAudioFormat::SignedInt);
+	recorder = new QAudioRecorder(this);
+	recorder->setAudioInput("pulseaudio:");
+	recorder->setAudioSettings(settings);
 
-	cerr << "devices list:" << endl;
-	for (auto &dev : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
-		cerr << dev.deviceName().toStdString() << endl;
-	}
-	cerr << endl;
+	QUrl url = QString("/dev/null");
+	recorder->setOutputLocation(url);
 
-	QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
-
-	if (!info.isFormatSupported(format)) {
-		cerr << "WARN: Default format not supported, trying to use the nearest.";
-		format = info.nearestFormat(format);
-	}
-
-	cerr << "Audio input format: " << format.sampleRate() << "hz "
-		<< format.channelCount() << " chans "
-		<< format.sampleSize() << "b"
-		<< endl;
-
-	device = NULL;
-	input = new QAudioInput(info, format, this);
+	probe = new QAudioProbe(this);
+	connect(probe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(AudioCb(QAudioBuffer)));
+	probe->setSource(recorder);
 }
 
 DBMeter::~DBMeter()
 {
-	delete input;
+	delete recorder;
 }
 
 void DBMeter::Start()
 {
-	device = input->start();
-	if (device) connect(device, SIGNAL(readyRead()), this, SLOT(AudioCb()));
+	recorder->record();
 }
 
 void DBMeter::Stop()
 {
-	input->stop();
+	recorder->stop();
 }
 
-void DBMeter::AudioCb()
+void DBMeter::AudioCb(const QAudioBuffer &buffer)
 {
-	int size = device->read(buffer, bufferSize) >> 1;
+	const int16_t *ptr = buffer.constData<int16_t>();
 	uint16_t maxVal = 0, val;
-	int16_t *ptr = (int16_t*) buffer;
+	int nbFrame = buffer.sampleCount();
 
-	cerr << __func__ << " length " << size;
-
-	while (size--) {
+	while (nbFrame--) {
 		val = abs(*ptr++);
 		if (val > maxVal) maxVal = val;
 	}
