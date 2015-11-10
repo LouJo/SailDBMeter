@@ -10,6 +10,7 @@ using namespace std;
 DBMeter::DBMeter()
 {
 	level = 0;
+	gain = defaultGain;
 	running = false;
 	computeMs = defaultComputeMs;
 	computeFrame = defaultComputeMs * rate / 1000;
@@ -54,11 +55,10 @@ void DBMeter::Stop()
 void DBMeter::ComputeFrame(int16_t v)
 {
 	int32_t d = v * v;
-	double r = d / INT32_MAX;
-	energy += r;
+	energy += d;
 
 	if (frameComputed++ == computeFrame) {
-		level = 20 * log(sqrt(energy / INT32_MAX / frameComputed));
+		level = 20 * log(gain * sqrt(energy / INT32_MAX / frameComputed));
 		cerr << level << endl;
 		energy = 0;
 		frameComputed = 0;
@@ -100,4 +100,12 @@ void DBMeter::SetComputeFrameMs(int ms)
 	computeMs = ms;
 	computeFrame = ms * rate / 1000;
 	computeFrameMsChanged();
+}
+
+double DBMeter::GetGain() { return gain; }
+
+void DBMeter::SetGain(double g)
+{
+	gain = g;
+	gainChanged();
 }
