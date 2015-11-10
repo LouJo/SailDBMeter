@@ -9,6 +9,11 @@ using namespace std;
 
 DBMeter::DBMeter()
 {
+	level = 0;
+	running = false;
+	computeMs = defaultComputeMs;
+	computeFrame = defaultComputeMs * rate / 1000;
+
 	settings.setCodec("audio/PCM");
 	settings.setChannelCount(1);
 	settings.setSampleRate(16000);
@@ -32,12 +37,16 @@ DBMeter::~DBMeter()
 
 void DBMeter::Start()
 {
+	running = true;
 	recorder->record();
+	runningChanged();
 }
 
 void DBMeter::Stop()
 {
+	running = false;
 	recorder->stop();
+	runningChanged();
 }
 
 void DBMeter::AudioCb(const QAudioBuffer &buffer)
@@ -51,4 +60,33 @@ void DBMeter::AudioCb(const QAudioBuffer &buffer)
 		if (val > maxVal) maxVal = val;
 	}
 	cerr << " maxVal " << maxVal << endl;
+	levelChanged();
+}
+
+double DBMeter::GetLevel()
+{
+	return level;
+}
+
+bool DBMeter::GetRunning()
+{
+	return running;
+}
+
+void DBMeter::SetRunning(bool r)
+{
+	if (r) Start();
+	else Stop();
+}
+
+int DBMeter::GetComputeFrameMs()
+{
+	return computeMs;
+}
+
+void DBMeter::SetComputeFrameMs(int ms)
+{
+	computeMs = ms;
+	computeFrame = ms * rate / 1000;
+	computeFrameMsChanged();
 }
