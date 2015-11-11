@@ -6,15 +6,11 @@ ApplicationWindow {
    allowedOrientations: Orientation.Portrait
 
 	initialPage: Component { Page {
+		allowedOrientations: Orientation.All
 		SilicaFlickable {
-			Text {
-				text: Math.floor(meter.level) + " db"
-			}
-			DBMeter {
-				id: meter
-			}
-			Component.onCompleted: {
-				meter.running = 1
+			anchors.fill: parent
+			PageMeter {
+				fontSize:100
 			}
 		}
 	}}
