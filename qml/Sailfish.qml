@@ -3,16 +3,54 @@ import Sailfish.Silica 1.0
 import LJDBMeter 1.0
 
 ApplicationWindow {
-   allowedOrientations: Orientation.Portrait
+	id: app
+	allowedOrientations: Orientation.All
+
+   property QtObject meterObject
+	property bool running: false
 
 	initialPage: Component { Page {
+		id: page
 		allowedOrientations: Orientation.All
 		SilicaFlickable {
 			anchors.fill: parent
 			PageMeter {
+				id: meter
 				fontSize:100
 				textColor: Theme.primaryColor
+				running: app.running
+
+				Component.onCompleted: {
+					app.meterObject = meter
+				}
 			}
 		}
 	}}
+
+	cover: Component {
+		CoverBackground {
+			id: cover
+			Label {
+				id: coverLabel
+				text: "dB Meter"
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.top: parent.top
+				anchors.topMargin: Theme.paddingLarge
+				anchors.bottomMargin: Theme.paddingLarge
+			}
+			Text {
+				id: coverLevel
+				text: app.meterObject.level.toFixed(2) + " dB"
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.top: coverLabel.bottom
+				anchors.topMargin: Theme.paddingLarge
+				color: Theme.primaryColor
+				font.pixelSize: 40
+			}
+
+			onStatusChanged: {
+				app.running = status != Cover.Active
+			}
+		}
+	}
 }

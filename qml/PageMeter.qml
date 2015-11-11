@@ -2,15 +2,19 @@ import QtQuick 2.0
 import LJDBMeter 1.0
 
 Item {
+	id: pageMeter
+
 	property int fontSize: 50
 	property color textColor: "black"
+	property double level: meter.level
+	property bool running: false
 
 	anchors.fill: parent
 
 	Text {
 		id: levelText
 		width: parent.top * 0.8
-		text: meter.level.toFixed(2) + " dB"
+		text: parent.level.toFixed(2) + " dB"
 
 		anchors.horizontalCenter : parent.horizontalCenter
 		anchors.top: parent.top
@@ -33,8 +37,6 @@ Item {
 	}
 	DBMeter {
 		id: meter
-	}
-	Component.onCompleted: {
-		meter.running = 1
+		running: pageMeter.running
 	}
 }
