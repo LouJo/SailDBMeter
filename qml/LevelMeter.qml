@@ -6,7 +6,7 @@ Item {
 
 	Rectangle {
 		anchors.fill: parent
-		color: "#cccccc"
+		color: "#30cccccc"
 
 		Rectangle {
 			id: levelGradient
@@ -28,7 +28,7 @@ Item {
 				// mask
 				anchors.bottom: parent.bottom
 				width: parent.width
-				height: parent.height * level / 20
+				height: parent.height * Math.max(Math.min(1,level / 100),0)
 			}
 		}
 		OpacityMask {

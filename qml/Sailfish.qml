@@ -11,6 +11,7 @@ ApplicationWindow {
 			anchors.fill: parent
 			PageMeter {
 				fontSize:100
+				textColor: Theme.primaryColor
 			}
 		}
 	}}
