@@ -20,7 +20,7 @@ class DBMeter : public QObject {
 	int computeMs, computeFrame, frameComputed;
 
 	static const int rate = 16000;
-	static const int defaultComputeMs = 100;
+	static const int defaultComputeMs = 200;
 	static const int defaultGain = 2500;
 	static const int defaultOffset = 1;
 

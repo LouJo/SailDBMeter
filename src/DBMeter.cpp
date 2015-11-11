@@ -18,7 +18,7 @@ DBMeter::DBMeter()
 
 	settings.setCodec("audio/PCM");
 	settings.setChannelCount(1);
-	settings.setSampleRate(16000);
+	settings.setSampleRate(rate);
 
 	recorder = new QAudioRecorder(this);
 	recorder->setAudioInput("pulseaudio:");
