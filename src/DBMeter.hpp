@@ -6,20 +6,23 @@ class DBMeter : public QObject {
 	Q_PROPERTY(double level READ GetLevel NOTIFY levelChanged)
 	Q_PROPERTY(bool running READ GetRunning WRITE SetRunning NOTIFY runningChanged)
 	Q_PROPERTY(int computeFrameMs READ GetComputeFrameMs WRITE SetComputeFrameMs NOTIFY computeFrameMsChanged)
-	Q_PROPERTY(int gain READ GetGain WRITE SetGain NOTIFY gainChanged)
+	Q_PROPERTY(double gain READ GetGain WRITE SetGain NOTIFY gainChanged)
+	Q_PROPERTY(double offset READ GetOffset WRITE SetOffset NOTIFY offsetChanged)
 
 	private:
 	QAudioRecorder *recorder;
 	QAudioEncoderSettings settings;
 	QAudioProbe *probe;
 
-	double level, energy, gain;
+	double level, energy;
+	double gain, offset;
 	bool running;
 	int computeMs, computeFrame, frameComputed;
 
 	static const int rate = 16000;
-	static const int defaultComputeMs = 500;
-	static const int defaultGain = 5000;
+	static const int defaultComputeMs = 100;
+	static const int defaultGain = 2500;
+	static const int defaultOffset = 1;
 
 	inline void ComputeFrame(int16_t v);
 
@@ -40,10 +43,13 @@ class DBMeter : public QObject {
 	int GetComputeFrameMs();
 	double GetGain();
 	void SetGain(double g);
+	double GetOffset();
+	void SetOffset(double g);
 
 	signals:
 	void levelChanged();
 	void runningChanged();
 	void computeFrameMsChanged();
 	void gainChanged();
+	void offsetChanged();
 };
