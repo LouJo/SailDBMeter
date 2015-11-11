@@ -7,7 +7,7 @@ ApplicationWindow {
 	allowedOrientations: Orientation.All
 
    property QtObject meterObject
-	property bool running: false
+	property bool running: true
 
 	initialPage: Component { Page {
 		id: page
@@ -18,6 +18,7 @@ ApplicationWindow {
 				id: meter
 				fontSize:100
 				textColor: Theme.primaryColor
+				textColorPaused: Theme.secondaryColor
 				running: app.running
 
 				Component.onCompleted: {

@@ -6,8 +6,10 @@ Item {
 
 	property int fontSize: 50
 	property color textColor: "black"
+	property color textColorPaused: "gray"
 	property double level: meter.level
 	property bool running: false
+	property bool userRunning: true
 
 	anchors.fill: parent
 
@@ -20,7 +22,7 @@ Item {
 		anchors.top: parent.top
 		anchors.topMargin:20
 		font.pixelSize: parent.fontSize
-		color: parent.textColor
+		color: parent.userRunning ? parent.textColor : parent.textColorPaused
 	}
 	LevelMeter {
 		id: levelMeter
@@ -37,6 +39,16 @@ Item {
 	}
 	DBMeter {
 		id: meter
-		running: pageMeter.running
+		running: pageMeter.running && pageMeter.userRunning
+
+		onRunningChanged: console.log("DBMeter run " + running)
+	}
+
+	MouseArea {
+		anchors.fill: parent
+		onClicked: {
+			console.log("click")
+			parent.userRunning = parent.userRunning ? false : true
+		}
 	}
 }
