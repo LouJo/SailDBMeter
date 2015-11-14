@@ -3,5 +3,6 @@
 <file>Sailfish.qml</file>
 <file>PageMeter.qml</file>
 <file>LevelMeter.qml</file>
+<file>Apropos.qml</file>
 </qresource>
 </RCC>

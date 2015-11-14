@@ -14,6 +14,19 @@ ApplicationWindow {
 		allowedOrientations: Orientation.All
 		SilicaFlickable {
 			anchors.fill: parent
+
+			PullDownMenu {
+				id: menu
+				MenuItem {
+					text: qsTr("Exit")
+					onClicked: Qt.quit()
+				}
+				MenuItem {
+					text: qsTr("About")
+					onClicked: pageStack.push(Qt.resolvedUrl("Apropos.qml"))
+				}
+			}
+
 			PageMeter {
 				id: meter
 				fontSize:100
