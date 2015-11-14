@@ -17,6 +17,7 @@ ApplicationWindow {
 			PageMeter {
 				id: meter
 				fontSize:100
+				textMaxFontSize: Theme.fontSizeLarge
 				textColor: Theme.primaryColor
 				textColorPaused: Theme.secondaryColor
 				running: app.running
