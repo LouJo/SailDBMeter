@@ -9,6 +9,7 @@ Item {
 	property color textColor: "black"
 	property color textColorPaused: "gray"
 	property double level: meter.level
+	property double levelMax: maxBar.level
 	property bool running: false
 	property bool userRunning: true
 

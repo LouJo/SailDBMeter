@@ -49,6 +49,17 @@ ApplicationWindow {
 				color: Theme.primaryColor
 				font.pixelSize: 40
 			}
+			Text {
+				id: coverMaxLevel
+				text: "max: " + app.meterObject.levelMax.toFixed(2) + " dB"
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.top: coverLevel.bottom
+				anchors.topMargin: Theme.paddingLarge
+				color: Theme.primaryColor
+				font.pixelSize: 30
+			}
+
+
 
 			onStatusChanged: {
 				app.running = status != Cover.Active
