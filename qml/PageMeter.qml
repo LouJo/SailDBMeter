@@ -26,7 +26,7 @@ Item {
 	}
 	LevelMeter {
 		id: levelMeter
-		level: meter.level
+		level: parent.level
 
 		//anchors.horizontalCenter : parent.horizontalCenter
 		anchors.left: parent.left
