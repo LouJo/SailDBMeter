@@ -6,6 +6,7 @@
 #include "DBMeter.hpp"
 
 using namespace std;
+int ggain = 100000;
 
 DBMeter::DBMeter()
 {
@@ -60,7 +61,7 @@ void DBMeter::ComputeFrame(int16_t v)
 
 	if (frameComputed++ == computeFrame) {
 		double w = sqrt(energy / INT32_MAX / frameComputed);
-		level = 20 * log(gain * w + offset);
+		level = 10 * log10(ggain * w + offset);
 		//cerr << level << endl;
 		energy = 0;
 		frameComputed = 0;
