@@ -66,7 +66,7 @@ Page {
 		Label {
 			anchors.horizontalCenter: parent.horizontalCenter
 			font.pixelSize: Theme.fontSizeSmall
-			property string urlstring: "http://nothing"
+			property string urlstring: "https://github.com/LouJo/SailDBMeter"
 			text: "<a href=\"" + urlstring + "\">" +  urlstring + "<\a>"
 			onLinkActivated: Qt.openUrlExternally(link)
 		}
