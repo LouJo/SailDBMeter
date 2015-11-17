@@ -10,3 +10,5 @@ The c++ module is usable inside qml as object. See properties in DBMeter.hpp for
 **Copyright:** Louis-Joseph Fournier
 
 **License:** MIT license
+
+**Source code** https://github.com/LouJo/SailDBMeter
