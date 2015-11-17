@@ -4,8 +4,6 @@
 #include <sailfishapp.h>
 #include "DBMeter.hpp"
 
-extern int ggain;
-
 class Main {
 	private:
 	QGuiApplication *app;
@@ -31,6 +29,5 @@ Q_DECL_EXPORT int main(int argc, char* argv[])
 {
 	qmlRegisterType<DBMeter>("LJDBMeter", 1, 0, "DBMeter");
 	Main *appli = new Main(argc, argv);
-	if (argc > 1) ggain = atoi(argv[1]);
 	return appli->Launch();
 }
