@@ -13,6 +13,9 @@ Item {
 	property bool running: false
 	property bool userRunning: true
 
+	property double gainForPhone: 160000
+	property double gainForTablet: 7000
+
 	anchors.fill: parent
 
 	Text {
@@ -82,6 +85,7 @@ Item {
 	DBMeter {
 		id: meter
 		running: pageMeter.running && pageMeter.userRunning
+		gain: (Screen.sizeCategory > Screen.Medium) ? gainForTablet : gainForPhone
 
 		onRunningChanged: {
 			console.log("DBMeter run " + running)
