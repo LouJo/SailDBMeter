@@ -15,7 +15,7 @@ Item {
 	property bool userRunning: true
 
 	property double gainForPhone: 160000
-	property double gainForTablet: 1000
+	property double gainForTablet: 2000
 
 	property double postGainForPhone: 1
 	property double postGainForTablet: 1.4
