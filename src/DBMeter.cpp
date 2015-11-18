@@ -11,6 +11,7 @@ DBMeter::DBMeter()
 {
 	level = 0;
 	gain = defaultGain;
+	postGain = defaultPostGain;
 	offset = defaultOffset;
 	running = false;
 	computeMs = defaultComputeMs;
@@ -60,7 +61,7 @@ void DBMeter::ComputeFrame(int16_t v)
 
 	if (frameComputed++ == computeFrame) {
 		double w = sqrt(energy / INT32_MAX / frameComputed);
-		level = 20 * log10(gain * w + offset);
+		level = postGain * 20 * log10(gain * w + offset);
 		energy = 0;
 		frameComputed = 0;
 		levelChanged();
@@ -107,8 +108,17 @@ double DBMeter::GetGain() { return gain; }
 
 void DBMeter::SetGain(double g)
 {
+	cerr << "set gain " << g << endl;
 	gain = g;
 	gainChanged();
+}
+
+double DBMeter::GetPostGain() { return postGain; }
+
+void DBMeter::SetPostGain(double g)
+{
+	postGain = g;
+	postGainChanged();
 }
 
 double DBMeter::GetOffset() { return offset; }

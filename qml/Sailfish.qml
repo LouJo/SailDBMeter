@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import LJDBMeter 1.0
 
 ApplicationWindow {
 	id: app
@@ -12,6 +11,7 @@ ApplicationWindow {
 	initialPage: Component { Page {
 		id: page
 		allowedOrientations: Orientation.All
+
 		SilicaFlickable {
 			anchors.fill: parent
 

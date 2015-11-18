@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import Sailfish.Silica 1.0
 import LJDBMeter 1.0
 
 Item {
@@ -14,7 +15,10 @@ Item {
 	property bool userRunning: true
 
 	property double gainForPhone: 160000
-	property double gainForTablet: 7000
+	property double gainForTablet: 1000
+
+	property double postGainForPhone: 1
+	property double postGainForTablet: 1.4
 
 	anchors.fill: parent
 
@@ -85,7 +89,8 @@ Item {
 	DBMeter {
 		id: meter
 		running: pageMeter.running && pageMeter.userRunning
-		gain: (Screen.sizeCategory > Screen.Medium) ? gainForTablet : gainForPhone
+		gain: (Screen.sizeCategory > Screen.Medium) ? pageMeter.gainForTablet : pageMeter.gainForPhone
+		postGain: (Screen.sizeCategory > Screen.Medium) ? pageMeter.postGainForTablet : pageMeter.postGainForPhone
 
 		onRunningChanged: {
 			console.log("DBMeter run " + running)

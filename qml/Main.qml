@@ -6,6 +6,6 @@ Item {
 	height:500
 
 	PageMeter {
-		running: true
+		gain: 1000
 	}
 }
