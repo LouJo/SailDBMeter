@@ -27,7 +27,7 @@ class Main {
 
 Q_DECL_EXPORT int main(int argc, char* argv[])
 {
-	qmlRegisterType<DBMeter>("LJDBMeter", 1, 0, "DBMeter");
+	qmlRegisterType<DBMeter>("harbour.saildbmeter.dbmeter", 1, 0, "DBMeter");
 	Main *appli = new Main(argc, argv);
 	return appli->Launch();
 }
