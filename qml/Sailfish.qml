@@ -6,7 +6,7 @@ ApplicationWindow {
 	allowedOrientations: Orientation.All
 
    property QtObject meterObject
-	property bool running: true
+	property bool running: Qt.application.active
 
 	initialPage: Component { Page {
 		id: page
@@ -33,7 +33,7 @@ ApplicationWindow {
 				textMaxFontSize: Theme.fontSizeLarge
 				textColor: Theme.primaryColor
 				textColorPaused: Theme.secondaryColor
-				running: app.running
+				running: app.running && page.status == PageStatus.Active
 
 				Component.onCompleted: {
 					app.meterObject = meter
@@ -70,12 +70,6 @@ ApplicationWindow {
 				anchors.topMargin: Theme.paddingLarge
 				color: Theme.primaryColor
 				font.pixelSize: 30
-			}
-
-
-
-			onStatusChanged: {
-				app.running = status != Cover.Active
 			}
 		}
 	}
