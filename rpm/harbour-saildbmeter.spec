@@ -14,7 +14,7 @@ Name:       harbour-saildbmeter
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Microphone noise DB meter
 Version:    0.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    GPL
 URL:        http://legolas.vefblog.net/
