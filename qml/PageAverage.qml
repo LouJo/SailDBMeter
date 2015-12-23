@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 /**
- * Silica page with level meter and max indicator
+ * Silica page with level meter and average indicator
  *
  * Need reference to meter object that provide level,
  * running and maxLevel values
@@ -46,22 +46,26 @@ Page {
 
 			//anchors.horizontalCenter : parent.horizontalCenter
 			anchors.left: parent.left
-			anchors.leftMargin: parent.width / 8
+			anchors.leftMargin: parent.width / 16
 			anchors.top: levelText.bottom
 			anchors.topMargin: 40
 			anchors.bottom: parent.bottom
 			anchors.bottomMargin: 60
 			width: parent.width / 4
 		}
-		MaxBar {
-			id: maxBar
-			anchors.left: levelMeter.left
-			anchors.bottom: levelMeter.bottom
-			height: levelMeter.height
-			barWidth: levelMeter.width
-			color: pageMeter.meter.running ? pageMeter.textColor : pageMeter.textColorPaused
-			textMaxFontSize: pageMeter.textMaxFontSize
-			maxLevel: pageMeter.meter.maxLevel
+
+		Column {
+			anchors.left: levelMeter.right
+			anchors.leftMargin: parent.width / 8
+			anchors.top: levelMeter.top
+			anchors.topMargin: levelMeter.height / 8
+
+			Label {
+				text: qsTr("Average")
+			}
+			Text {
+				text: pageMeter.meter.avgLevel.toFixed(2) + " dB"
+			}
 		}
 
 		MouseArea {
