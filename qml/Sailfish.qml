@@ -6,43 +6,26 @@ ApplicationWindow {
 	allowedOrientations: Orientation.All
 
 	property bool userRunning: true
+	property int dbFontSize: 100
 
 	DBMeterController {
 		id: meter
 		running: Qt.application.active && app.userRunning
 	}
 
-	initialPage: Component { Page {
-		id: page
-		allowedOrientations: Orientation.All
+	initialPage: Component {
+		PageMeter {
+			id: page
+			running: meter.running
+			computeFrameMs: meter.computeFrameMs
+			level: meter.level
+			fontSize: dbFontSize
 
-		SilicaFlickable {
-			anchors.fill: parent
-
-			Menu {
-			}
-
-			PageMeter {
-				id: pageMeter
-				running: meter.running
-				computeFrameMs: meter.computeFrameMs
-				level: meter.level
-
-				fontSize:100
-				textMaxFontSize: Theme.fontSizeLarge
-				textColor: Theme.primaryColor
-				textColorPaused: Theme.secondaryColor
-			}
-
-			MouseArea {
-				anchors.fill: parent
-				onClicked: {
-					console.log("click")
-					app.userRunning = app.userRunning ? false : true
-				}
+			onTogglePause : {
+				app.userRunning = app.userRunning ? false : true
 			}
 		}
-	}}
+	}
 
 	cover: Component {
 		CoverPage {
