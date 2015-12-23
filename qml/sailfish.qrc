@@ -2,6 +2,7 @@
 <qresource prefix="/qml/">
 <file>Sailfish.qml</file>
 <file>PageMeter.qml</file>
+<file>PageAverage.qml</file>
 <file>LevelMeter.qml</file>
 <file>DBMeterController.qml</file>
 <file>MaxBar.qml</file>

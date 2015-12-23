@@ -56,7 +56,12 @@ Item {
 			maxLevel = level;
 			maxCounter = 0;
 		}
+		console.log("running: " + running)
 	}
 
-	onAvgReset: { avgLevel = level; avgCounter = 1; }
+	onAvgReset: {
+		avgLevel = level;
+		avgCounter = 1;
+		console.log("avg reset")
+	}
 }

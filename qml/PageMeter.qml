@@ -14,8 +14,7 @@ Page {
 
 	property int fontSize: 100
 	property int textMaxFontSize: Theme.fontSizeLarge
-	property color textColor: Theme.primaryColor
-	property color textColorPaused: Theme.secondaryColor
+	property color textColor: meter.running ? Theme.primaryColor : Theme.secondaryColor
 
 	property QtObject meter
 
@@ -38,7 +37,7 @@ Page {
 			anchors.top: parent.top
 			anchors.topMargin:20
 			font.pixelSize: pageMeter.fontSize
-			color: pageMeter.meter.running ? pageMeter.textColor : pageMeter.textColorPaused
+			color: pageMeter.textColor
 		}
 		LevelMeter {
 			id: levelMeter
@@ -59,7 +58,7 @@ Page {
 			anchors.bottom: levelMeter.bottom
 			height: levelMeter.height
 			barWidth: levelMeter.width
-			color: pageMeter.meter.running ? pageMeter.textColor : pageMeter.textColorPaused
+			color: pageMeter.textColor
 			textMaxFontSize: pageMeter.textMaxFontSize
 			maxLevel: pageMeter.meter.maxLevel
 		}
@@ -67,7 +66,6 @@ Page {
 		MouseArea {
 			anchors.fill: parent
 			onClicked: {
-				console.log("click")
 				pageMeter.togglePause()
 			}
 		}

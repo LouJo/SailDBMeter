@@ -20,33 +20,33 @@ ApplicationWindow {
 		running: Qt.application.active && app.userRunning
 	}
 
-	/*
 	initialPage: Component {
-		PageMeter {
-			id: page
-			fontSize: dbFontSize
-			meter: meter
+		Page {
+			// empty page for beginning
 		}
-	}*/
+	}
 
 	cover: Component {
 		CoverPage {
 			level: meter.level
+			maxLevel: meter.maxLevel
+			avgLevel: meter.avgLevel
 		}
 	}
 
 	Component.onCompleted: {
-		var page_one = pageStack.push(
+		var page_one = pageStack.replace(
 			Qt.resolvedUrl("PageMeter.qml"),
 			{ meter: meter }
 		);
 		page_one.togglePause.connect(app.togglePause)
 
 		var page_two = pageStack.pushAttached(
-			Qt.resolvedUrl("PageMeterAverage.qml"),
+			Qt.resolvedUrl("PageAverage.qml"),
 			{ meter: meter }
 		);
 		page_two.togglePause.connect(app.togglePause)
+		page_two.resetAverage.connect(meter.avgReset)
 	}
 
 	function togglePause() {
