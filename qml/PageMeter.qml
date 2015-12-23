@@ -46,45 +46,16 @@ Item {
 		anchors.bottomMargin: 60 
 		width: parent.width / 4
 	}
-	Rectangle {
+	MaxBar {
 		id: maxBar
-
-		signal reset()
-
-		property int counter: 0
-		property int delayMs: 2000
-		property int counterMax: delayMs / meter.computeFrameMs
-		property double level: 0
-		property double ref: parent.level
-
-		width: levelMeter.width
-		height: 2
-		color: parent.userRunning ? parent.textColor : parent.textColorPaused
+		ref: parent.level
 		anchors.left: levelMeter.left
 		anchors.bottom: levelMeter.bottom
-		anchors.bottomMargin: Math.min(100, level) / 100 * levelMeter.height
-
-		onRefChanged: {
-			if (ref >= level) {
-				level = ref
-				counter = 0
-			}
-			else if (counter++ >= counterMax) {
-				level = ref
-				counter = 0
-			}
-		}
-
-		onReset: { level = ref; counter = 0 }
-	}
-	Text {
-		id: maxText
+		height: levelMeter.height
+		barWidth: levelMeter.width
 		color: parent.userRunning ? parent.textColor : parent.textColorPaused
-		text: maxBar.level.toFixed(2) + " dB"
-		anchors.left: maxBar.right
-		anchors.verticalCenter: maxBar.verticalCenter
-		anchors.leftMargin: 10
-		font.pixelSize: parent.textMaxFontSize
+		textMaxFontSize: parent.textMaxFontSize
+		computeFrameMs: meter.computeFrameMs
 	}
 	DBMeter {
 		id: meter
