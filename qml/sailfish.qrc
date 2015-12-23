@@ -6,5 +6,7 @@
 <file>DBMeterController.qml</file>
 <file>MaxBar.qml</file>
 <file>Apropos.qml</file>
+<file>CoverPage.qml</file>
+<file>Menu.qml</file>
 </qresource>
 </RCC>
