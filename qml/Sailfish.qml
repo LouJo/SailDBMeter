@@ -6,7 +6,12 @@ ApplicationWindow {
 	allowedOrientations: Orientation.All
 
    property QtObject meterObject
-	property bool running: Qt.application.active
+	property bool userRunning: true
+
+	DBMeterController {
+		id: meter
+		running: Qt.application.active && app.userRunning
+	}
 
 	initialPage: Component { Page {
 		id: page
@@ -28,15 +33,25 @@ ApplicationWindow {
 			}
 
 			PageMeter {
-				id: meter
+				id: pageMeter
+				running: meter.running
+				computeFrameMs: meter.computeFrameMs
+				level: meter.level
+
 				fontSize:100
 				textMaxFontSize: Theme.fontSizeLarge
 				textColor: Theme.primaryColor
 				textColorPaused: Theme.secondaryColor
-				running: app.running && page.status == PageStatus.Active
 
 				Component.onCompleted: {
 					app.meterObject = meter
+				}
+			}
+			MouseArea {
+				anchors.fill: parent
+				onClicked: {
+					console.log("click")
+					app.userRunning = app.userRunning ? false : true
 				}
 			}
 		}
@@ -62,6 +77,7 @@ ApplicationWindow {
 				color: Theme.primaryColor
 				font.pixelSize: 40
 			}
+			/*
 			Text {
 				id: coverMaxLevel
 				text: "max: " + app.meterObject.levelMax.toFixed(2) + " dB"
@@ -71,6 +87,7 @@ ApplicationWindow {
 				color: Theme.primaryColor
 				font.pixelSize: 30
 			}
+			*/
 		}
 	}
 }

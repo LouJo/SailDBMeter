@@ -5,5 +5,6 @@
 <file>LevelMeter.qml</file>
 <file>MaxBar.qml</file>
 <file>Apropos.qml</file>
+<file>DBMeterController.qml</file>
 </qresource>
 </RCC>

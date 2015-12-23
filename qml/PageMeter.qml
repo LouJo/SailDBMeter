@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.saildbmeter.dbmeter 1.0
 
 Item {
 	id: pageMeter
@@ -9,16 +8,10 @@ Item {
 	property int textMaxFontSize: 14
 	property color textColor: "black"
 	property color textColorPaused: "gray"
-	property double level: meter.level
+	property double level
 	property double levelMax: maxBar.level
 	property bool running: false
-	property bool userRunning: true
-
-	property double gainForPhone: 160000
-	property double gainForTablet: 2000
-
-	property double postGainForPhone: 1
-	property double postGainForTablet: 1.4
+	property alias computeFrameMs: maxBar.computeFrameMs
 
 	anchors.fill: parent
 
@@ -31,7 +24,7 @@ Item {
 		anchors.top: parent.top
 		anchors.topMargin:20
 		font.pixelSize: parent.fontSize
-		color: parent.userRunning ? parent.textColor : parent.textColorPaused
+		color: parent.running ? parent.textColor : parent.textColorPaused
 	}
 	LevelMeter {
 		id: levelMeter
@@ -53,27 +46,12 @@ Item {
 		anchors.bottom: levelMeter.bottom
 		height: levelMeter.height
 		barWidth: levelMeter.width
-		color: parent.userRunning ? parent.textColor : parent.textColorPaused
+		color: parent.running ? parent.textColor : parent.textColorPaused
 		textMaxFontSize: parent.textMaxFontSize
-		computeFrameMs: meter.computeFrameMs
-	}
-	DBMeter {
-		id: meter
-		running: pageMeter.running && pageMeter.userRunning
-		gain: (Screen.sizeCategory > Screen.Medium) ? pageMeter.gainForTablet : pageMeter.gainForPhone
-		postGain: (Screen.sizeCategory > Screen.Medium) ? pageMeter.postGainForTablet : pageMeter.postGainForPhone
-
-		onRunningChanged: {
-			console.log("DBMeter run " + running)
-			if (running) maxBar.reset()
-		}
 	}
 
-	MouseArea {
-		anchors.fill: parent
-		onClicked: {
-			console.log("click")
-			parent.userRunning = parent.userRunning ? false : true
-		}
+	onRunningChanged: {
+		console.log("DBMeter pageMeter run " + running)
+		if (running) maxBar.reset()
 	}
 }
