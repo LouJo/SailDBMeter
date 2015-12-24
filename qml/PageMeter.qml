@@ -20,7 +20,7 @@ Page {
 
 	signal togglePause()
 
-	anchors.fill: parent
+	allowedOrientations: Orientation.All
 
 	SilicaFlickable {
 		anchors.fill: parent

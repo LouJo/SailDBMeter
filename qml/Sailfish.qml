@@ -14,15 +14,29 @@ ApplicationWindow {
 
 	property bool userRunning: true
 	property int dbFontSize: 100
+	property QtObject meter
 
+	/*
 	DBMeterController {
 		id: meter
 		running: Qt.application.active && app.userRunning
-	}
+	}*/
 
 	initialPage: Component {
-		Page {
-			// empty page for beginning
+		PageMeter {
+			id: page_one
+
+			DBMeterController {
+				id: meterObject
+				running: Qt.application.active && app.userRunning
+			}
+
+			meter: meterObject
+
+			Component.onCompleted: {
+				app.meter = meterObject
+				togglePause.connect(app.togglePause)
+			}
 		}
 	}
 
@@ -35,12 +49,6 @@ ApplicationWindow {
 	}
 
 	Component.onCompleted: {
-		var page_one = pageStack.replace(
-			Qt.resolvedUrl("PageMeter.qml"),
-			{ meter: meter }
-		);
-		page_one.togglePause.connect(app.togglePause)
-
 		var page_two = pageStack.pushAttached(
 			Qt.resolvedUrl("PageAverage.qml"),
 			{ meter: meter }
