@@ -12,11 +12,13 @@ import Sailfish.Silica 1.0
 Page {
 	id: pageMeter
 
+	property bool largeHeight: height > 600
+
 	property int fontSize: 100
-	property int fontSizeLabel: 40
-	property int fontSizeLevel: 70
-	property int fontSizeTime: 50
-	property int topMarginElement: 30
+	property int fontSizeLabel: 30
+	property int fontSizeLevel: largeHeight ? 70 : 30
+	property int fontSizeTime: 40
+	property int topMarginElement: largeHeight ? 30 : 4
 
 	property color textColor: meter.running ? Theme.primaryColor : Theme.secondaryColor
 
@@ -107,9 +109,9 @@ Page {
 			anchors.right: parent.right
 			anchors.rightMargin: parent.width / 8
 			anchors.top: levelMeter.top
-			anchors.topMargin: levelMeter.height / 8
+			anchors.topMargin: pageMeter.largeHeight ? levelMeter.height / 8 : 0
 
-			Label {
+			SectionHeader {
 				id: timeLabel
 				text: qsTr("Time")
 				font.pixelSize: pageMeter.fontSizeLabel
@@ -126,7 +128,7 @@ Page {
 				anchors.top: timeLabel.bottom
 				anchors.topMargin: pageMeter.topMarginElement
 			}
-			Label {
+			SectionHeader {
 				id: avgLabel
 				text: qsTr("Average")
 				font.pixelSize: pageMeter.fontSizeLabel
