@@ -16,9 +16,9 @@ Page {
 
 	property int fontSize: 100
 	property int fontSizeLabel: 30
-	property int fontSizeLevel: largeHeight ? 70 : 30
+	property int fontSizeLevel: largeHeight ? 70 : 40
 	property int fontSizeTime: 40
-	property int topMarginElement: largeHeight ? 30 : 4
+	property int topMarginElement: largeHeight ? 30 : 0
 
 	property color textColor: meter.running ? Theme.primaryColor : Theme.secondaryColor
 
@@ -67,16 +67,16 @@ Page {
 			width: levelMeter.width
 			height: 2
 			color: pageMeter.textColor
-			opacity: 0.5
+			opacity: 0.8
 
-			property int yTop: Math.min(100, pageMeter.meter.avgMaxLevel) + 1
-			property int yBottom: Math.min(100, pageMeter.meter.avgMinLevel) - 1
+			property int yTop: Math.min(100, pageMeter.meter.avgMaxLevel)
+			property int yBottom: Math.min(100, pageMeter.meter.avgMinLevel)
 
 			Behavior on yTop {
 				NumberAnimation {
 					duration: 2000
 					easing.type: Easing.Linear
-					easing.amplitude: levelMeter.height
+					easing.amplitude: 100
 				}
 			}
 
@@ -84,16 +84,16 @@ Page {
 				NumberAnimation {
 					duration: 2000
 					easing.type: Easing.Linear
-					easing.amplitude: levelMeter.height
+					easing.amplitude: 100
 				}
 			}
 
 			anchors.left: levelMeter.left
 
 			anchors.top: levelMeter.top
-			anchors.topMargin: levelMeter.height - yTop * levelMeter.height / 100
+			anchors.topMargin: levelMeter.height - yTop * levelMeter.height / 100 - 1
 			anchors.bottom: levelMeter.bottom
-			anchors.bottomMargin: yBottom * levelMeter.height / 100
+			anchors.bottomMargin: yBottom * levelMeter.height / 100 - 1
 		}
 
 		MouseArea {
@@ -115,9 +115,10 @@ Page {
 				id: timeLabel
 				text: qsTr("Time")
 				font.pixelSize: pageMeter.fontSizeLabel
-				color: pageMeter.textColor
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: parent.top
+				anchors.topMargin: 0
+				horizontalAlignment: Text.AlignHCenter
 			}
 			Text {
 				id: timeText
@@ -132,10 +133,10 @@ Page {
 				id: avgLabel
 				text: qsTr("Average")
 				font.pixelSize: pageMeter.fontSizeLabel
-				color: pageMeter.textColor
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: timeText.bottom
 				anchors.topMargin: pageMeter.topMarginElement
+				horizontalAlignment: Text.AlignHCenter
 			}
 			Text {
 				id: avgText
