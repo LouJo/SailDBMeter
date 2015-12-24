@@ -92,8 +92,8 @@ Page {
 
 			anchors.top: levelMeter.top
 			anchors.topMargin: levelMeter.height - yTop * levelMeter.height / 100
-			anchors.bottom: levelMeter.bottom * levelMeter.height / 100
-			anchors.bottomMargin: yBottom
+			anchors.bottom: levelMeter.bottom
+			anchors.bottomMargin: yBottom * levelMeter.height / 100
 		}
 
 		MouseArea {
