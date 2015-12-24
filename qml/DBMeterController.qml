@@ -21,6 +21,7 @@ Item {
 
 	property alias running: meter.running
 	property alias level: meter.level
+	property alias computeFrameMs: meter.computeFrameMs
 
 	// max value
 	property int delayMaxMs: 2000
@@ -32,6 +33,14 @@ Item {
 	property int avgCounter: 0
 	property double avgLevel: 0
 	signal avgReset()
+
+	// min and max avg
+	property int delayAvgMs: 5000
+	property int avgCounterLimit: delayAvgMs / meter.computeFrameMs
+	property double avgMaxLevel: 0
+	property double avgMinLevel: 100
+	property int avgMinCounter: 0
+	property int avgMaxCounter: 0
 
 	DBMeter {
 		id: meter
@@ -49,6 +58,15 @@ Item {
 		// average
 		avgLevel = (avgLevel * avgCounter + level) / (avgCounter + 1)
 		avgCounter++
+		// min/max average
+		if (avgLevel >= avgMaxLevel || avgMaxCounter++ >= avgCounterLimit) {
+			avgMaxLevel = avgLevel
+			avgMaxCounter = 0
+		}
+		if (avgLevel <= avgMinLevel || avgMinCounter++ >= avgCounterLimit) {
+			avgMinLevel = avgLevel
+			avgMinCounter = 0
+		}
 	}
 
 	onRunningChanged: { 
@@ -62,6 +80,8 @@ Item {
 	onAvgReset: {
 		avgLevel = level;
 		avgCounter = 1;
+		avgMinCounter = avgMaxCounter = 0
+		avgMinLevel = avgMaxLevel = level
 		console.log("avg reset")
 	}
 }
