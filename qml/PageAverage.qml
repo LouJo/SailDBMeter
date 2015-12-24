@@ -67,8 +67,8 @@ Page {
 			color: pageMeter.textColor
 			opacity: 0.5
 
-			property int yTop: Math.min(100, pageMeter.meter.avgMaxLevel) / 100 * levelMeter.height
-			property int yBottom: Math.min(100, pageMeter.meter.avgMinLevel) / 100 * levelMeter.height
+			property int yTop: Math.min(100, pageMeter.meter.avgMaxLevel) + 1
+			property int yBottom: Math.min(100, pageMeter.meter.avgMinLevel) - 1
 
 			Behavior on yTop {
 				NumberAnimation {
@@ -89,8 +89,8 @@ Page {
 			anchors.left: levelMeter.left
 
 			anchors.top: levelMeter.top
-			anchors.topMargin: levelMeter.height - yTop
-			anchors.bottom: levelMeter.bottom
+			anchors.topMargin: levelMeter.height - yTop * levelMeter.height / 100
+			anchors.bottom: levelMeter.bottom * levelMeter.height / 100
 			anchors.bottomMargin: yBottom
 		}
 
