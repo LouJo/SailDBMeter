@@ -3,11 +3,13 @@
 <file>Sailfish.qml</file>
 <file>PageMeter.qml</file>
 <file>PageAverage.qml</file>
+<file>PageReference.qml</file>
 <file>LevelMeter.qml</file>
 <file>DBMeterController.qml</file>
 <file>MaxBar.qml</file>
 <file>Apropos.qml</file>
 <file>CoverPage.qml</file>
+<file>RefElement.qml</file>
 <file>Menu.qml</file>
 </qresource>
 </RCC>

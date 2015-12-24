@@ -50,11 +50,20 @@ ApplicationWindow {
 
 	Component.onCompleted: {
 		var page_two = pageStack.pushAttached(
-			Qt.resolvedUrl("PageAverage.qml"),
+			Qt.resolvedUrl("PageReference.qml"),
 			{ meter: meter }
 		);
 		page_two.togglePause.connect(app.togglePause)
-		page_two.resetAverage.connect(meter.avgReset)
+
+		var page_three = pageStack.replaceAbove(
+			page_two,
+			Qt.resolvedUrl("PageAverage.qml"),
+			{ meter: meter },
+			PageStackAction.Immediate
+		);
+
+		page_three.togglePause.connect(app.togglePause)
+		page_three.resetAverage.connect(meter.avgReset)
 	}
 
 	function togglePause() {
