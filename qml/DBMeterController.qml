@@ -19,9 +19,10 @@ Item {
 	property double postGainForPhone: 1
 	property double postGainForTablet: 1.4
 
-	property alias running: meter.running
+	property bool running: false
 	property alias level: meter.level
 	property alias computeFrameMs: meter.computeFrameMs
+	property int countTempRun: 0
 
 	// max value
 	property int delayMaxMs: 2000
@@ -45,6 +46,7 @@ Item {
 	DBMeter {
 		id: meter
 
+		running: controller.running || controller.countTempRun
 		gain: (Screen.sizeCategory > Screen.Medium) ? controller.gainForTablet : controller.gainForPhone
 		postGain: (Screen.sizeCategory > Screen.Medium) ? controller.postGainForTablet : controller.postGainForPhone
 	}
@@ -67,6 +69,8 @@ Item {
 			avgMinLevel = avgLevel
 			avgMinCounter = 0
 		}
+		// run temporaly
+		if (countTempRun) countTempRun--
 	}
 
 	onRunningChanged: { 
@@ -83,5 +87,9 @@ Item {
 		avgMinCounter = avgMaxCounter = 0
 		avgMinLevel = avgMaxLevel = level
 		console.log("avg reset")
+	}
+
+	function runTempMs(timeMs) {
+		countTempRun = Math.ceil(timeMs / computeFrameMs)
 	}
 }

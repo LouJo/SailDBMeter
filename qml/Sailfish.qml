@@ -46,6 +46,15 @@ ApplicationWindow {
 			level: meter.level
 			maxLevel: meter.maxLevel
 			avgLevel: meter.avgLevel
+
+			CoverActionList {
+				CoverAction {
+					iconSource: "image://theme/icon-cover-sync"
+					onTriggered: {
+						meter.runTempMs(1000)
+					}
+				}
+			}
 		}
 	}
 
