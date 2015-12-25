@@ -51,6 +51,16 @@ Item {
 		postGain: (Screen.sizeCategory > Screen.Medium) ? controller.postGainForTablet : controller.postGainForPhone
 	}
 
+	// timer to stop temporaly run if start fails
+	Timer {
+		id: timer
+		running: false
+		repeat: false
+		interval: 1000
+
+		onTriggered: countTempRun = 0
+	}
+
 	onLevelChanged: {
 		// max value
 		if (level >= maxLevel || maxCounter++ >= maxCounterLimit) {
@@ -70,7 +80,10 @@ Item {
 			avgMinCounter = 0
 		}
 		// run temporaly
-		if (countTempRun) countTempRun--
+		if (countTempRun) {
+			countTempRun--
+			if (!countTempRun) timer.stop()
+		}
 	}
 
 	onRunningChanged: { 
@@ -91,5 +104,8 @@ Item {
 
 	function runTempMs(timeMs) {
 		countTempRun = Math.ceil(timeMs / computeFrameMs)
+		if (timer.running) timer.stop()
+		timer.interval = timeMs + 500
+		timer.start()
 	}
 }

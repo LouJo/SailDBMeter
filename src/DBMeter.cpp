@@ -59,7 +59,7 @@ void DBMeter::ComputeFrame(int16_t v)
 	int32_t d = v * v;
 	energy += d;
 
-	if (frameComputed++ == computeFrame) {
+	if (frameComputed++ >= computeFrame) {
 		double w = sqrt(energy / INT32_MAX / frameComputed);
 		level = postGain * 20 * log10(gain * w + offset);
 		energy = 0;
@@ -88,6 +88,8 @@ bool DBMeter::GetRunning()
 
 void DBMeter::SetRunning(bool r)
 {
+	if (running == r) return;
+
 	if (r) Start();
 	else Stop();
 }
