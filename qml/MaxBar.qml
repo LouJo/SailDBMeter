@@ -5,7 +5,6 @@ Item {
 	property double maxLevel: 0
 
 	property color color
-	property int computeFrameMs
 	property int barWidth
 	property int textMaxFontSize
 

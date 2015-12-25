@@ -4,73 +4,33 @@ import Sailfish.Silica 1.0
 /**
  * Silica page with level meter and average indicator
  *
- * Need reference to meter object that provide level,
- * running and avgLevel, avgMinLevel and avgMaxLevel values
+ * Inherit from PageMeterGeneric
  *
  */
 
-Page {
+PageMeterGeneric {
 	id: pageMeter
 
-	property bool largeHeight: height > 600
+	barWidth: width / 8
 
-	property int fontSize: 100
 	property int fontSizeLabel: 30
 	property int fontSizeLevel: largeHeight ? 70 : 40
 	property int fontSizeTime: 40
 	property int topMarginElement: largeHeight ? 30 : 0
 
-	property color textColor: meter.running ? Theme.primaryColor : Theme.secondaryColor
-
-	property QtObject meter
-
 	property int avgTimeSec: meter.avgCounter * meter.computeFrameMs / 1000
-
-	signal togglePause()
 	signal resetAverage()
 
-	allowedOrientations: Orientation.All
-
-	SilicaFlickable {
+	itemToAdd: Component { Item {
 		anchors.fill: parent
-
-		Menu {
-		}
-
-		Text {
-			id: levelText
-			width: parent.top * 0.8
-			text: pageMeter.meter.level.toFixed(2) + " dB"
-
-			anchors.horizontalCenter : parent.horizontalCenter
-			anchors.top: parent.top
-			anchors.topMargin:20
-			font.pixelSize: pageMeter.fontSize
-			color: pageMeter.textColor
-		}
-
-		LevelMeter {
-			id: levelMeter
-			level: pageMeter.meter.level
-
-			anchors.left: parent.left
-			anchors.leftMargin: parent.width / 8
-			anchors.top: levelText.bottom
-			anchors.topMargin: 40
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 60
-			width: parent.width / 8
-		}
 
 		Rectangle {
 			id: minMaxBar
-			width: levelMeter.width
-			height: 2
 			color: pageMeter.textColor
 			opacity: 0.8
 
-			property int yTop: Math.min(100, pageMeter.meter.avgMaxLevel)
-			property int yBottom: Math.min(100, pageMeter.meter.avgMinLevel)
+			property double yTop: Math.min(100, pageMeter.meter.avgMaxLevel)
+			property double yBottom: Math.min(100, pageMeter.meter.avgMinLevel)
 
 			Behavior on yTop {
 				NumberAnimation {
@@ -88,28 +48,19 @@ Page {
 				}
 			}
 
-			anchors.left: levelMeter.left
-
-			anchors.top: levelMeter.top
-			anchors.topMargin: levelMeter.height - yTop * levelMeter.height / 100 - 1
-			anchors.bottom: levelMeter.bottom
-			anchors.bottomMargin: yBottom * levelMeter.height / 100 - 1
-		}
-
-		MouseArea {
-			anchors.fill: parent
-			onClicked: {
-				pageMeter.togglePause()
-			}
+			x: pageMeter.barLeftMargin
+			y: levelMeter.y + levelMeter.height - yTop * levelMeter.height / 100 - 1
+			height: yTop - yBottom + 2
+			width: levelMeter.width
 		}
 
 		Item {
-			anchors.left: levelMeter.right
-			anchors.leftMargin: parent.width / 8
+			anchors.left: parent.left
+			anchors.leftMargin: pageMeter.barLeftMargin + levelMeter.width + parent.width / 8
 			anchors.right: parent.right
-			anchors.rightMargin: parent.width / 8
-			anchors.top: levelMeter.top
-			anchors.topMargin: pageMeter.largeHeight ? levelMeter.height / 8 : 0
+			anchors.rightMargin: pageMeter.width / 8
+			anchors.top: parent.top
+			anchors.topMargin: levelMeter.y + (pageMeter.largeHeight ? levelMeter.height / 8 : 0)
 
 			SectionHeader {
 				id: timeLabel
@@ -158,6 +109,6 @@ Page {
 				anchors.top: avgText.bottom
 				anchors.topMargin: pageMeter.topMarginElement
 			}
-		}
+		} }
 	}
 }

@@ -4,21 +4,16 @@ import Sailfish.Silica 1.0
 /**
  * Silica page with level meter and text references
  *
- * Need reference to meter object that provide level
+ * Inherit from PageMeterGeneric
  *
  */
 
-Page {
+PageMeterGeneric {
 	id: pageMeter
-	allowedOrientations: Orientation.All
 
-	property int fontSize: 100
+	barWidth: width / 8
+
 	property double level: meter.level
-	property color textColor: meter.running ? Theme.primaryColor : Theme.secondaryColor
-
-	property QtObject meter
-
-	signal togglePause()
 
 	Behavior on level {
 		NumberAnimation {
@@ -28,49 +23,20 @@ Page {
 		}
 	}
 
-	SilicaFlickable {
-		anchors.fill: parent
-
-		Menu {
-		}
-
-		Text {
-			id: levelText
-			width: parent.top * 0.8
-			text: pageMeter.meter.level.toFixed(2) + " dB"
-
-			anchors.horizontalCenter : parent.horizontalCenter
-			anchors.top: parent.top
-			anchors.topMargin:20
-			font.pixelSize: pageMeter.fontSize
-			color: pageMeter.textColor
-		}
-
-		LevelMeter {
-			id: levelMeter
-			level: pageMeter.meter.level
-
-			anchors.left: parent.left
-			anchors.leftMargin: parent.width / 8
-			anchors.top: levelText.bottom
-			anchors.topMargin: 40
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 60
-			width: parent.width / 8
-		}
-
-
+	itemToAdd: Component {
 		Item {
-			/// references
-			anchors.left: levelMeter.right
-			anchors.leftMargin: 10
+			anchors.left: parent.left
+			anchors.leftMargin: pageMeter.barLeftMargin + pageMeter.barWidth + 10
 			anchors.right: parent.right
-			anchors.rightMargin: parent.width / 8
-			anchors.top: levelMeter.top
-			anchors.bottom: levelMeter.bottom
+			anchors.rightMargin: pageMeter.width / 8
+			anchors.bottom: parent.bottom
+			anchors.bottomMargin: pageMeter.barBottomMargin
+			height: pageMeter.levelMeter.height
 
-			property alias textColor: pageMeter.textColor
-			property alias level: pageMeter.level
+			property color textColor: pageMeter.textColor
+			property double level: pageMeter.level
+
+			/// references
 
 			RefElement {
 				text: qsTr("Quiet field")
@@ -100,12 +66,13 @@ Page {
 				text: qsTr("Boeing 747 (1ml)")
 				ref: 90
 			}
-		}
-		
-		MouseArea {
-			anchors.fill: parent
-			onClicked: {
-				pageMeter.togglePause()
+			RefElement {
+				text: "ref"
+				ref: 0
+			}
+			RefElement {
+				text: "ref"
+				ref: 100
 			}
 		}
 	}

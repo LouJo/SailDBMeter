@@ -25,6 +25,7 @@ ApplicationWindow {
 	initialPage: Component {
 		PageMeter {
 			id: page_one
+			nextPage: page_two
 
 			DBMeterController {
 				id: meterObject
@@ -51,14 +52,11 @@ ApplicationWindow {
 	Component {
 		id: page_two
 		PageReference {
+			nextPage: page_three
+			meter: app.meter
+
 			Component.onCompleted: {
 				togglePause.connect(app.togglePause)
-			}
-			onStatusChanged: {
-				if (status == PageStatus.Active && pageStack.depth < 3) {
-					console.log("activating 3thd page")
-					pageStack.pushAttached(page_three, { meter: meter });
-				}
 			}
 		}
 	}
@@ -66,15 +64,13 @@ ApplicationWindow {
 	Component {
 		id: page_three
 		PageAverage {
+			meter: app.meter
+
 			Component.onCompleted: {
 				togglePause.connect(app.togglePause)
 				resetAverage.connect(meter.avgReset)
 			}
 		}
-	}
-
-	Component.onCompleted: {
-		pageStack.pushAttached(page_two, { meter: meter });
 	}
 
 	function togglePause() {

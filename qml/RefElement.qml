@@ -12,7 +12,7 @@ Item {
 	property string text
 
 	anchors.bottom: parent.bottom
-	anchors.bottomMargin: ref * parent.height / 100 - Theme.fontSizeSmall / 2
+	anchors.bottomMargin: ref * parent.height / 100 + Theme.fontSizeSmall / 2
 	anchors.left: parent.left
 
 	Text {

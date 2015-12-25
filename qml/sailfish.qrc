@@ -1,6 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/qml/">
 <file>Sailfish.qml</file>
+<file>PageMeterGeneric.qml</file>
 <file>PageMeter.qml</file>
 <file>PageAverage.qml</file>
 <file>PageReference.qml</file>
