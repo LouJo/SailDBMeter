@@ -48,22 +48,33 @@ ApplicationWindow {
 		}
 	}
 
+	Component {
+		id: page_two
+		PageReference {
+			Component.onCompleted: {
+				togglePause.connect(app.togglePause)
+			}
+			onStatusChanged: {
+				if (status == PageStatus.Active && pageStack.depth < 3) {
+					console.log("activating 3thd page")
+					pageStack.pushAttached(page_three, { meter: meter });
+				}
+			}
+		}
+	}
+
+	Component {
+		id: page_three
+		PageAverage {
+			Component.onCompleted: {
+				togglePause.connect(app.togglePause)
+				resetAverage.connect(meter.avgReset)
+			}
+		}
+	}
+
 	Component.onCompleted: {
-		var page_two = pageStack.pushAttached(
-			Qt.resolvedUrl("PageReference.qml"),
-			{ meter: meter }
-		);
-		page_two.togglePause.connect(app.togglePause)
-
-		var page_three = pageStack.replaceAbove(
-			page_two,
-			Qt.resolvedUrl("PageAverage.qml"),
-			{ meter: meter },
-			PageStackAction.Immediate
-		);
-
-		page_three.togglePause.connect(app.togglePause)
-		page_three.resetAverage.connect(meter.avgReset)
+		pageStack.pushAttached(page_two, { meter: meter });
 	}
 
 	function togglePause() {
