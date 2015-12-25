@@ -13,10 +13,8 @@ PageMeterGeneric {
 	itemToAdd:  Component {
 		MaxBar {
 			id: maxBar
-			anchors.left: parent.left
-			anchors.leftMargin: pageMeter.barLeftMargin
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: pageMeter.barBottomMargin
+			x: levelMeter.x
+			y: levelMeter.y
 			height: levelMeter.height
 			barWidth: levelMeter.width
 			color: pageMeter.textColor

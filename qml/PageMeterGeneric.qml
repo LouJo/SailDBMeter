@@ -84,6 +84,6 @@ Page {
 	}
 
 	Component.onCompleted: {
-		if (itemToAdd !== null) itemToAdd.createObject(flickable);
+		if (itemToAdd !== null) itemToAdd.createObject(levelText.parent);
 	}
 }
