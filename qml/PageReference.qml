@@ -39,6 +39,10 @@ PageMeterGeneric {
 			/// references
 
 			RefElement {
+				text: qsTr("Whisper")
+				ref: 20
+			}
+			RefElement {
 				text: qsTr("Quiet field")
 				ref: 30
 			}
@@ -59,19 +63,15 @@ PageMeterGeneric {
 				ref: 70
 			}
 			RefElement {
-				text: qsTr("Freight train (15m)")
+				text: qsTr("Police whistle")
 				ref: 80
 			}
 			RefElement {
-				text: qsTr("Boeing 747 (1ml)")
+				text: qsTr("Noisy factory")
 				ref: 90
 			}
 			RefElement {
-				text: "ref"
-				ref: 0
-			}
-			RefElement {
-				text: "ref"
+				text: qsTr("Car horn at 5m")
 				ref: 100
 			}
 		}
