@@ -48,6 +48,7 @@ ApplicationWindow {
 			avgLevel: meter.avgLevel
 
 			CoverActionList {
+				enabled: meter.countTempRun == 0
 				CoverAction {
 					iconSource: "image://theme/icon-cover-sync"
 					onTriggered: {
