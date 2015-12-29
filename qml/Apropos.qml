@@ -41,7 +41,7 @@ Page {
 			Label {
 				anchors.horizontalCenter: parent.horizontalCenter
 				font.pixelSize: Theme.fontSizeSmall
-				text: "version 0.2.1"
+				text: "version 0.2.2"
 			}
 
 			SectionHeader {
