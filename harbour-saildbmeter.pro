@@ -8,6 +8,9 @@ DEFINES += TARGET=\""$(TARGET")\"
 RESOURCES += \
 	qml/sailfish.qrc \
 	icons/icons.qrc
+DISTFILES += \
+        rpm/harbour-saildbmeter.yaml \
+        rpm/harbour-saildbmeter.spec
 
 SOURCES += \
 	src/DBMeter.cpp \
