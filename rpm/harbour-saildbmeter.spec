@@ -16,7 +16,7 @@ Summary:    Microphone noise DB meter
 Version:    0.2
 Release:    1
 Group:      Qt/Qt
-License:    GPL
+License:    MIT
 URL:        http://legolas.vefblog.net/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-saildbmeter.yaml
