@@ -13,7 +13,7 @@ Name:       harbour-saildbmeter
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Microphone noise DB meter
-Version:    0.3
+Version:    0.3.0
 Release:    1
 Group:      Qt/Qt
 License:    MIT
