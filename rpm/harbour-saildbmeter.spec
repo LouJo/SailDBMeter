@@ -13,7 +13,7 @@ Name:       harbour-saildbmeter
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Microphone noise DB meter
-Version:    0.2
+Version:    0.3
 Release:    1
 Group:      Qt/Qt
 License:    MIT
@@ -37,14 +37,17 @@ Type: desktop-application
 Categories:
  - Audio
  - Utility
-DeveloperName: LouJou
+DeveloperName: Louis-Joseph Fournier (LouJou)
 PackagerName: Mark Washeim (poetaster)
 Custom:
- - Repo: https://github.com/poetaster/harbour-saildbmeter
+ - Repo: https://github.com/LouJou/SailDBMeter
+ - PackagingRepo: https://github.com/poetaster/SailDBMeter
 Icon: https://raw.githubusercontent.com/poetaster/SailDBMeter/master/harbour-saildbmeter.png
 Screenshots:
  - https://raw.githubusercontent.com/poetaster/SailDBMeter/master/screenshots/20151225190436.png
  - https://raw.githubusercontent.com/poetaster/SailDBMeter/master/screenshots/20151225190436.png
+Url:
+ - HomePage: http://legolas.vefblog.net/
 %endif
 
 %prep
