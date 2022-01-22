@@ -19,7 +19,6 @@ Group:      Qt/Qt
 License:    MIT
 URL:        http://legolas.vefblog.net/
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  harbour-saildbmeter.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
@@ -30,8 +29,23 @@ BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  desktop-file-utils
 
 %description
-Display noise level in decibel using microphone
+Display noise level in decibel using microphone. It displays current noise level and max during 2 seconds, average and comparison with noise references.
 
+%if "%{?vendor}" == "chum"
+PackageName: SailDBMeter
+Type: desktop-application
+Categories:
+ - Audio
+ - Utility
+DeveloperName: LouJou
+PackagerName: Mark Washeim (poetaster)
+Custom:
+ - Repo: https://github.com/poetaster/harbour-saildbmeter
+Icon: https://raw.githubusercontent.com/poetaster/SailDBMeter/master/harbour-saildbmeter.png
+Screenshots:
+ - https://raw.githubusercontent.com/poetaster/SailDBMeter/master/screenshots/20151225190436.png
+ - https://raw.githubusercontent.com/poetaster/SailDBMeter/master/screenshots/20151225190436.png
+%endif
 
 %prep
 %setup -q -n %{name}-%{version}
